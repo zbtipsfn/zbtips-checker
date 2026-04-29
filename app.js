@@ -14,6 +14,12 @@ const appState = {
   currentResultKey: null
 };
 
+
+function capitalizeFirst(text) {
+  if (!text || typeof text !== "string") return text;
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 const entrySymptoms = [
   {
     id: "aim-assist-unreliable",
@@ -265,22 +271,9 @@ const recommendedSettings = {
   }
 };
 
-const trainingMaps = [
-  {
-    name: "🎯 Shooting Range Aim Trainer",
-    creator: "Teadoh",
-    code: "2524-6026-4229"
-  },
-  {
-    name: "QTK Training Day - Zero Build Practice",
-    creator: "QTK",
-    code: "7510-1541-2262"
-  }
-];
-
 const results = {
   "aim-assist-unreliable": {
-    title: "Your Aim Assist Probably Isn’t Gone. Your Setup Feels Unstable",
+    title: "your aim assist probably isn’t gone. your setup feels unstable",
     problem: "This usually means connection, controller, performance, or sensitivity instability. Not that aim assist got deleted.",
     checkFirst: [
       "check whether you’re on Wi-Fi or hardwired",
@@ -305,8 +298,7 @@ const results = {
     glossary: ["Deadzone", "Look Input Curve", "Precision Aim Assist Strength", "Tracking Aim Assist Strength"]
   },
   "no-middle": {
-    useTrainingMaps: true,
-    title: "Your Setup Has No Middle Because Your Tuning Is Fighting Itself",
+    title: "your setup has no middle because your tuning is fighting itself",
     problem: "This usually means your curve, look sens, ADS sens, or advanced settings setup does not fit how you actually play. Not that the game is broken.",
     checkFirst: [
       "check whether you should be on simple or advanced settings",
@@ -330,8 +322,7 @@ const results = {
     glossary: ["Look Input Curve", "Look Speed", "ADS Speed"]
   },
   "range-close": {
-    useTrainingMaps: true,
-    title: "Your Close-Range Aim Is Probably Breaking Because You’re Taking the Wrong Kind of Fight",
+    title: "your close-range aim is probably breaking because you’re taking the wrong kind of fight",
     problem: "This usually means you’re ADSing too close, or your close-range tuning is too jumpy, too slow, or too delayed. Not that every player in your face is cheating.",
     checkFirst: [
       "check whether you’re ADSing when the player is already in your face",
@@ -355,8 +346,7 @@ const results = {
     glossary: ["Look Input Curve", "Look Speed", "Turning Boost", "Boost Ramp Time", "Look Dampening Time"]
   },
   "range-long": {
-    useTrainingMaps: true,
-    title: "Your Long-Range Aim Is Probably Too Raw or Too Disconnected",
+    title: "your long-range aim is probably too raw or too disconnected",
     problem: "This usually means your input curve, ADS speed, or scoped tuning is making distant tracking harder than it should be. Not that every beam is cheating.",
     checkFirst: [
       "check your input curve",
@@ -380,8 +370,7 @@ const results = {
     glossary: ["Look Input Curve", "ADS Speed", "Scoped Speed Multiplier"]
   },
   "ads-wrong": {
-    useTrainingMaps: true,
-    title: "Your ADS Is Fighting Your Normal Aim",
+    title: "your ADS is fighting your normal aim",
     problem: "This usually means your ADS speed does not match your normal look, or your curve is making ADS feel disconnected. Not that platform or cheaters are the real reason your ADS feels heavy.",
     checkFirst: [
       "check ADS horizontal and vertical speed",
@@ -405,7 +394,7 @@ const results = {
     glossary: ["ADS Speed", "Look Input Curve", "Look Speed", "Turning Boost", "Look Dampening Time"]
   },
   "input-delay": {
-    title: "This Feels Like Delay, Not Bad Sens",
+    title: "this feels like delay, not bad sens",
     problem: "This usually means connection, controller method, performance, or display delay. Not that your settings randomly stopped working.",
     checkFirst: [
       "check whether you’re on Wi-Fi or hardwired",
@@ -430,8 +419,7 @@ const results = {
     glossary: []
   },
   "loose-shaky": {
-    useTrainingMaps: true,
-    title: "Your Setup Looks Too Jumpy or Too Unstable",
+    title: "your setup looks too jumpy or too unstable",
     problem: "This usually means deadzone, boost, curve, or sens instability. Sometimes panic makes it look worse than it really is.",
     checkFirst: [
       "check deadzones",
@@ -803,7 +791,7 @@ function renderHome() {
   resetState();
   const choices = entrySymptoms.map((item) => `
     <button class="choice-button" data-entry="${item.id}">
-      <strong>${item.label}</strong>
+      <strong>${capitalizeFirst(item.label)}</strong>
       <span>${item.desc}</span>
     </button>
   `).join("");
@@ -869,9 +857,9 @@ function renderCurrentStep() {
       </div>
       <div class="meta-row">
         <span class="badge">step ${currentUsableIndex} of ${usableSteps}</span>
-        <span class="badge">${entrySymptoms.find(x => x.id === state.currentFlow)?.label || ""}</span>
+        <span class="badge">${capitalizeFirst(entrySymptoms.find(x => x.id === state.currentFlow)?.label || "")}</span>
       </div>
-      <h2 class="card-title">${step.title}</h2>
+      <h2 class="card-title">${capitalizeFirst(step.title)}</h2>
       <div class="choice-grid">
         ${step.choices.map((choice, index) => `
           <button class="choice-button" data-choice="${index}">
@@ -989,35 +977,6 @@ function renderControllerRecommendations(platform) {
   `;
 }
 
-function shouldShowTrainingMaps(resultKey) {
-  const allowed = [
-    "no-middle",
-    "ads-wrong",
-    "loose-shaky",
-    "range-close",
-    "range-long"
-  ];
-  return allowed.includes(resultKey);
-}
-
-function renderTrainingMaps() {
-  return `
-    <section class="result-section">
-      <h3>Suggested Training Maps</h3>
-      <p>Use these to test your sensitivity in Zero Build before you judge it off one bad fight.</p>
-      <div class="training-map-list">
-        ${trainingMaps.map(map => `
-          <div class="training-map-card">
-            <h4>${map.name}</h4>
-            <p><strong>Creator:</strong> ${map.creator}</p>
-            <p><strong>Code:</strong> ${map.code}</p>
-          </div>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
 function renderGlossaryItems(items) {
   if (!items.length) {
     return `<p class="small-note">No glossary links needed for this result.</p>`;
@@ -1057,9 +1016,9 @@ function renderResult(data, resultKey) {
     <section class="screen">
       <div class="meta-row">
         <span class="badge">result</span>
-        <span class="badge">${entrySymptoms.find(x => x.id === state.currentFlow)?.label || "symptom checker"}</span>
+        <span class="badge">${capitalizeFirst(entrySymptoms.find(x => x.id === state.currentFlow)?.label || "symptom checker")}</span>
       </div>
-      <h2 class="result-title">${resultData.title}</h2>
+      <h2 class="result-title">${capitalizeFirst(resultData.title)}</h2>
       <p class="result-problem">${resultData.problem}</p>
 
       <div class="result-grid">
@@ -1082,7 +1041,7 @@ function renderResult(data, resultKey) {
 
         ${shouldOfferRecommendedSettings(resultKey) ? `
         <section class="result-section">
-          <h3>Suggested Playstyle</h3>
+          <h3>Suggested playstyle</h3>
           <p>${getPlaystyleNote(resultKey)}</p>
         </section>
         ` : ""}
@@ -1093,20 +1052,18 @@ function renderResult(data, resultKey) {
         </section>
 
         <section class="result-section">
-          <h3>Test Note</h3>
+          <h3>Test note</h3>
           <p>${resultData.testingNote}</p>
         </section>
 
-        ${shouldShowTrainingMaps(resultKey) ? renderTrainingMaps() : ""}
-
         <section class="result-section">
-          <h3>Setting Glossary</h3>
+          <h3>Setting glossary</h3>
           ${renderGlossaryItems(resultData.glossary)}
         </section>
       </div>
 
       <div class="result-actions">
-        ${shouldOfferRecommendedSettings(resultKey) ? `<button class="primary-button" type="button" id="recommendedSettings">Apply These Settings</button>` : ""}
+        ${shouldOfferRecommendedSettings(resultKey) ? `<button class="primary-button" type="button" id="recommendedSettings">Apply these settings</button>` : ""}
         <button class="${shouldOfferRecommendedSettings(resultKey) ? "secondary-button" : "primary-button"}" type="button" id="restartResult">Start over</button>
         <button class="ghost-button" type="button" id="glossaryOnly">Glossary</button>
       </div>
@@ -1156,7 +1113,7 @@ function renderResultByKey(resultKey) {
 function renderRecommendedSettingsPrompt() {
   app.innerHTML = `
     <section class="screen">
-      <h2 class="card-title">Recommended Settings by Playstyle</h2>
+      <h2 class="card-title">Recommended settings by playstyle</h2>
       <p class="card-copy">These are starting points, not magic settings. Pick the one that matches how you actually fight.</p>
 
       <div class="choice-grid">
@@ -1192,7 +1149,7 @@ function renderRecommendedSettingsResult(playstyle) {
   app.innerHTML = `
     <section class="screen">
       <div class="result-section">
-        <h3>${preset.title}</h3>
+        <h3>${capitalizeFirst(preset.title)}</h3>
         <p>${preset.why}</p>
       </div>
 
@@ -1233,12 +1190,10 @@ function renderRecommendedSettingsResult(playstyle) {
         <p>Use this as a starting point. Do not copy numbers blindly and then keep changing everything every five minutes.</p>
       </div>
 
-      ${renderTrainingMaps()}
-
       <div class="button-row">
-        <button class="secondary-button" type="button" id="tryAnother">Try Another</button>
+        <button class="secondary-button" type="button" id="tryAnother">Try another</button>
         <button class="ghost-button" type="button" id="backFromSettings">Back</button>
-        <button class="primary-button" type="button" id="startOverFinal">Start Over</button>
+        <button class="primary-button" type="button" id="startOverFinal">Start over</button>
       </div>
     </section>
   `;
