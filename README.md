@@ -13,3 +13,7 @@ Open `index.html` in your browser.
 
 ## Free hosting
 Best first option: GitHub Pages.
+
+## Font update
+- Orbitron is used for headings to match the ZBTips logo energy.
+- Inter is used for body text for readability.

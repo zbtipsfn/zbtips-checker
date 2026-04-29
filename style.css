@@ -4,6 +4,8 @@
 }
 
 :root {
+  --font-heading: 'Orbitron', sans-serif;
+  --font-body: 'Inter', Arial, Helvetica, sans-serif;
   --bg: #050b14;
   --bg-2: #08111d;
   --panel: rgba(14, 20, 34, 0.94);
@@ -36,7 +38,7 @@ body {
   overflow-x: hidden;
   padding: 20px;
   color: var(--text);
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   background:
     radial-gradient(circle at top center, rgba(170, 56, 255, 0.10), transparent 28%),
     radial-gradient(circle at 20% 10%, rgba(40, 231, 255, 0.08), transparent 18%),
@@ -636,3 +638,45 @@ h1 {
     min-width: 0;
   }
 }
+
+
+/* ZBTips font system */
+h1,
+h2,
+h3,
+.card-title,
+.result-title,
+.app-title,
+.hero-chip,
+.badge,
+.eyebrow,
+.result-section h3,
+.glossary-toggle {
+  font-family: var(--font-heading);
+}
+
+.app-title {
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+  font-weight: 800;
+  line-height: 1.08;
+  text-shadow:
+    0 0 12px rgba(170, 56, 255, 0.36),
+    0 0 22px rgba(40, 231, 255, 0.16);
+}
+
+h2,
+.card-title,
+.result-title {
+  letter-spacing: 0.025em;
+}
+
+h3,
+.result-section h3,
+.glossary-toggle,
+.eyebrow,
+.badge,
+.hero-chip {
+  letter-spacing: 0.055em;
+}
+
