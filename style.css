@@ -379,3 +379,25 @@ h1 {
     width: 100%;
   }
 }
+
+
+.map-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.map-card {
+  background: #11161d;
+  border: 1px solid #2a313d;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.map-card h4 {
+  margin: 0 0 8px;
+}
+
+.map-card p {
+  margin: 6px 0;
+}

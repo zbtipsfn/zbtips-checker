@@ -265,6 +265,41 @@ const recommendedSettings = {
   }
 };
 
+
+const trainingMaps = [
+  {
+    name: "🎯 Shooting Range Aim Trainer",
+    creator: "Teadoh",
+    code: "2524-6026-4229",
+    note: "Best for testing raw look sens, ADS feel, and quick before/after changes."
+  },
+  {
+    name: "QTK Training Day - Zero Build Practice",
+    creator: "QTK",
+    code: "7510-1541-2262",
+    note: "Best for Zero Build reps when you want more live-feeling target practice."
+  }
+];
+
+function renderTrainingMapsSection() {
+  return `
+    <section class="result-section">
+      <h3>Suggested training maps</h3>
+      <p>Test sensitivity in a controlled map before judging it in ranked or real fights.</p>
+      <div class="map-list">
+        ${trainingMaps.map(map => `
+          <div class="map-card">
+            <h4>${map.name}</h4>
+            <p><strong>Code:</strong> ${map.code}</p>
+            <p><strong>Creator:</strong> ${map.creator}</p>
+            <p>${map.note}</p>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 const results = {
   "aim-assist-unreliable": {
     title: "your aim assist probably isn’t gone. your setup feels unstable",
@@ -292,6 +327,7 @@ const results = {
     glossary: ["Deadzone", "Look Input Curve", "Precision Aim Assist Strength", "Tracking Aim Assist Strength"]
   },
   "no-middle": {
+    trainingMaps: true,
     title: "your setup has no middle because your tuning is fighting itself",
     problem: "This usually means your curve, look sens, ADS sens, or advanced settings setup does not fit how you actually play. Not that the game is broken.",
     checkFirst: [
@@ -316,6 +352,7 @@ const results = {
     glossary: ["Look Input Curve", "Look Speed", "ADS Speed"]
   },
   "range-close": {
+    trainingMaps: true,
     title: "your close-range aim is probably breaking because you’re taking the wrong kind of fight",
     problem: "This usually means you’re ADSing too close, or your close-range tuning is too jumpy, too slow, or too delayed. Not that every player in your face is cheating.",
     checkFirst: [
@@ -340,6 +377,7 @@ const results = {
     glossary: ["Look Input Curve", "Look Speed", "Turning Boost", "Boost Ramp Time", "Look Dampening Time"]
   },
   "range-long": {
+    trainingMaps: true,
     title: "your long-range aim is probably too raw or too disconnected",
     problem: "This usually means your input curve, ADS speed, or scoped tuning is making distant tracking harder than it should be. Not that every beam is cheating.",
     checkFirst: [
@@ -364,6 +402,7 @@ const results = {
     glossary: ["Look Input Curve", "ADS Speed", "Scoped Speed Multiplier"]
   },
   "ads-wrong": {
+    trainingMaps: true,
     title: "your ADS is fighting your normal aim",
     problem: "This usually means your ADS speed does not match your normal look, or your curve is making ADS feel disconnected. Not that platform or cheaters are the real reason your ADS feels heavy.",
     checkFirst: [
@@ -413,6 +452,7 @@ const results = {
     glossary: []
   },
   "loose-shaky": {
+    trainingMaps: true,
     title: "your setup looks too jumpy or too unstable",
     problem: "This usually means deadzone, boost, curve, or sens instability. Sometimes panic makes it look worse than it really is.",
     checkFirst: [
@@ -1040,6 +1080,8 @@ function renderResult(data, resultKey) {
         </section>
         ` : ""}
 
+        ${resultData.trainingMaps ? renderTrainingMapsSection() : ""}
+
         <section class="result-section alert">
           <h3>Still not fixed?</h3>
           <p class="route-note">${resultData.reroute || resultData.nextStep || ""}</p>
@@ -1183,6 +1225,8 @@ function renderRecommendedSettingsResult(playstyle) {
         <h3>Important</h3>
         <p>Use this as a starting point. Do not copy numbers blindly and then keep changing everything every five minutes.</p>
       </div>
+
+      ${renderTrainingMapsSection()}
 
       <div class="button-row">
         <button class="secondary-button" type="button" id="tryAnother">Try another</button>

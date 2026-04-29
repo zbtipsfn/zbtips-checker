@@ -19,3 +19,6 @@ Open `index.html` in your browser.
 
 ## Free hosting
 Best first option: GitHub Pages.
+
+## Added in this version
+- recommended sensitivity training maps on the results that tell users to test in maps
