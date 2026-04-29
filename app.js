@@ -14,26 +14,20 @@ const appState = {
   currentResultKey: null
 };
 
-
-function capitalizeFirst(text) {
-  if (!text || typeof text !== "string") return text;
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
 const entrySymptoms = [
   {
     id: "aim-assist-unreliable",
-    label: "my aim assist feels gone",
+    label: "My aim assist feels gone",
     desc: "weak tracking, reticle slips, aim assist feels unreliable"
   },
   {
     id: "no-middle",
-    label: "my sensitivity has no middle",
+    label: "My sensitivity has no middle",
     desc: "one setting feels too slow, the next feels too fast"
   },
   {
     id: "range-breaks",
-    label: "my aim breaks at certain ranges",
+    label: "My aim breaks at certain ranges",
     desc: "close-range or long-range aiming falls apart"
   },
   {
@@ -43,12 +37,12 @@ const entrySymptoms = [
   },
   {
     id: "input-delay",
-    label: "input delay makes the game feel unplayable",
+    label: "Input delay makes the game feel unplayable",
     desc: "the game feels delayed, muddy, or behind your hands"
   },
   {
     id: "loose-shaky",
-    label: "my aim feels loose or shaky",
+    label: "My aim feels loose or shaky",
     desc: "overcorrecting, twitchy aim, deadzone complaints"
   }
 ];
@@ -787,23 +781,45 @@ function resetState() {
   appState.currentResultKey = null;
 }
 
+function getFlowLabel(flowId) {
+  return entrySymptoms.find(x => x.id === flowId)?.label || "Symptom checker";
+}
+
 function renderHome() {
   resetState();
   const choices = entrySymptoms.map((item) => `
     <button class="choice-button" data-entry="${item.id}">
-      <strong>${capitalizeFirst(item.label)}</strong>
+      <strong>${item.label}</strong>
       <span>${item.desc}</span>
     </button>
   `).join("");
 
   app.innerHTML = `
-    <section class="screen">
-      <h2 class="card-title">What feels wrong most?</h2>
-      <p class="card-copy">Pick the closest symptom first. The checker sorts the real problem after that.</p>
+    <section class="screen home-screen">
+      <div class="hero-panel">
+        <div class="hero-copy">
+          <span class="hero-kicker">Zero Build Controller Tuning</span>
+          <h2 class="card-title">Fix what feels wrong with your aim</h2>
+          <p class="card-copy">Pick the symptom. Get the first settings to test. Stop changing random stuff.</p>
+        </div>
+        <div class="hero-chips">
+          <span class="hero-chip">Shaky aim</span>
+          <span class="hero-chip">Bad ADS</span>
+          <span class="hero-chip">No middle sens</span>
+          <span class="hero-chip">Input delay</span>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <span class="section-line"></span>
+        <p>Choose the closest symptom</p>
+      </div>
+
       <div class="choice-grid">${choices}</div>
+
       <div class="button-row">
         <button class="primary-button" type="button" id="recommendedSettingsHome">Recommended settings by playstyle</button>
-        <button class="secondary-button" type="button" id="openGlossary">Glossary</button>
+        <button class="secondary-button" type="button" id="openGlossary">Settings glossary</button>
       </div>
     </section>
   `;
@@ -851,15 +867,15 @@ function renderCurrentStep() {
   const pct = Math.max(10, Math.round((currentUsableIndex / usableSteps) * 100));
 
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen question-screen">
       <div class="progress" aria-hidden="true">
         <div class="progress-bar" style="width:${pct}%"></div>
       </div>
       <div class="meta-row">
-        <span class="badge">step ${currentUsableIndex} of ${usableSteps}</span>
-        <span class="badge">${capitalizeFirst(entrySymptoms.find(x => x.id === state.currentFlow)?.label || "")}</span>
+        <span class="badge">Step ${currentUsableIndex} of ${usableSteps}</span>
+        <span class="badge">${getFlowLabel(state.currentFlow)}</span>
       </div>
-      <h2 class="card-title">${capitalizeFirst(step.title)}</h2>
+      <h2 class="card-title">${step.title}</h2>
       <div class="choice-grid">
         ${step.choices.map((choice, index) => `
           <button class="choice-button" data-choice="${index}">
@@ -1013,12 +1029,12 @@ function renderResult(data, resultKey) {
   }
 
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen result-screen">
       <div class="meta-row">
-        <span class="badge">result</span>
-        <span class="badge">${capitalizeFirst(entrySymptoms.find(x => x.id === state.currentFlow)?.label || "symptom checker")}</span>
+        <span class="badge">Result</span>
+        <span class="badge">${getFlowLabel(state.currentFlow)}</span>
       </div>
-      <h2 class="result-title">${capitalizeFirst(resultData.title)}</h2>
+      <h2 class="result-title">${resultData.title}</h2>
       <p class="result-problem">${resultData.problem}</p>
 
       <div class="result-grid">
@@ -1112,7 +1128,7 @@ function renderResultByKey(resultKey) {
 
 function renderRecommendedSettingsPrompt() {
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen settings-prompt-screen">
       <h2 class="card-title">Recommended settings by playstyle</h2>
       <p class="card-copy">These are starting points, not magic settings. Pick the one that matches how you actually fight.</p>
 
@@ -1147,9 +1163,9 @@ function renderRecommendedSettingsResult(playstyle) {
   const preset = recommendedSettings[playstyle];
 
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen settings-screen">
       <div class="result-section">
-        <h3>${capitalizeFirst(preset.title)}</h3>
+        <h3>${preset.title}</h3>
         <p>${preset.why}</p>
       </div>
 
@@ -1221,7 +1237,7 @@ function renderGlossaryScreen() {
   }).join("");
 
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen glossary-screen">
       <h2 class="card-title">Settings glossary</h2>
       <p class="card-copy">Use this when a result tells you to check a setting and you want the fast version of what it actually does.</p>
       <div class="glossary-list">${items}</div>
