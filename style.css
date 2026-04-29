@@ -79,7 +79,7 @@ body {
 .hero-panel {
   position: relative;
   margin-bottom: 22px;
-  padding: 20px 20px 16px;
+  padding: 18px 20px 16px;
   border: 1px solid rgba(181, 117, 255, 0.24);
   border-radius: 26px;
   background:
@@ -111,22 +111,23 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
 }
 
 .hero-brand {
   display: flex;
-  align-items: center;
-  gap: 18px;
+  align-items: flex-end;
+  gap: 14px;
   min-width: 0;
 }
 
 .hero-logo {
   display: block;
-  width: min(320px, 42vw);
+  width: clamp(180px, 24vw, 260px);
   height: auto;
   filter: drop-shadow(0 8px 22px rgba(170, 56, 255, 0.28));
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 .hero-copy {
@@ -611,5 +612,27 @@ h1 {
 
   .hero-strip {
     gap: 8px;
+  }
+}
+
+
+@media (max-width: 720px) {
+  .hero-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-brand {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero-logo {
+    width: min(220px, 58vw);
+  }
+
+  .hero-home.ghost-button {
+    width: 100%;
+    min-width: 0;
   }
 }
