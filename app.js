@@ -17,17 +17,17 @@ const appState = {
 const entrySymptoms = [
   {
     id: "aim-assist-unreliable",
-    label: "My aim assist feels gone",
+    label: "my aim assist feels gone",
     desc: "weak tracking, reticle slips, aim assist feels unreliable"
   },
   {
     id: "no-middle",
-    label: "My sensitivity has no middle",
+    label: "my sensitivity has no middle",
     desc: "one setting feels too slow, the next feels too fast"
   },
   {
     id: "range-breaks",
-    label: "My aim breaks at certain ranges",
+    label: "my aim breaks at certain ranges",
     desc: "close-range or long-range aiming falls apart"
   },
   {
@@ -37,12 +37,12 @@ const entrySymptoms = [
   },
   {
     id: "input-delay",
-    label: "Input delay makes the game feel unplayable",
+    label: "input delay makes the game feel unplayable",
     desc: "the game feels delayed, muddy, or behind your hands"
   },
   {
     id: "loose-shaky",
-    label: "My aim feels loose or shaky",
+    label: "my aim feels loose or shaky",
     desc: "overcorrecting, twitchy aim, deadzone complaints"
   }
 ];
@@ -781,10 +781,6 @@ function resetState() {
   appState.currentResultKey = null;
 }
 
-function getFlowLabel(flowId) {
-  return entrySymptoms.find(x => x.id === flowId)?.label || "Symptom checker";
-}
-
 function renderHome() {
   resetState();
   const choices = entrySymptoms.map((item) => `
@@ -795,31 +791,13 @@ function renderHome() {
   `).join("");
 
   app.innerHTML = `
-    <section class="screen home-screen">
-      <div class="hero-panel">
-        <div class="hero-copy">
-          <span class="hero-kicker">Zero Build Controller Tuning</span>
-          <h2 class="card-title">Fix what feels wrong with your aim</h2>
-          <p class="card-copy">Pick the symptom. Get the first settings to test. Stop changing random stuff.</p>
-        </div>
-        <div class="hero-chips">
-          <span class="hero-chip">Shaky aim</span>
-          <span class="hero-chip">Bad ADS</span>
-          <span class="hero-chip">No middle sens</span>
-          <span class="hero-chip">Input delay</span>
-        </div>
-      </div>
-
-      <div class="section-heading">
-        <span class="section-line"></span>
-        <p>Choose the closest symptom</p>
-      </div>
-
+    <section class="screen">
+      <h2 class="card-title">What feels wrong most?</h2>
+      <p class="card-copy">Pick the closest symptom first. The checker sorts the real problem after that.</p>
       <div class="choice-grid">${choices}</div>
-
       <div class="button-row">
         <button class="primary-button" type="button" id="recommendedSettingsHome">Recommended settings by playstyle</button>
-        <button class="secondary-button" type="button" id="openGlossary">Settings glossary</button>
+        <button class="secondary-button" type="button" id="openGlossary">Glossary</button>
       </div>
     </section>
   `;
@@ -867,13 +845,13 @@ function renderCurrentStep() {
   const pct = Math.max(10, Math.round((currentUsableIndex / usableSteps) * 100));
 
   app.innerHTML = `
-    <section class="screen question-screen">
+    <section class="screen">
       <div class="progress" aria-hidden="true">
         <div class="progress-bar" style="width:${pct}%"></div>
       </div>
       <div class="meta-row">
-        <span class="badge">Step ${currentUsableIndex} of ${usableSteps}</span>
-        <span class="badge">${getFlowLabel(state.currentFlow)}</span>
+        <span class="badge">step ${currentUsableIndex} of ${usableSteps}</span>
+        <span class="badge">${entrySymptoms.find(x => x.id === state.currentFlow)?.label || ""}</span>
       </div>
       <h2 class="card-title">${step.title}</h2>
       <div class="choice-grid">
@@ -1029,10 +1007,10 @@ function renderResult(data, resultKey) {
   }
 
   app.innerHTML = `
-    <section class="screen result-screen">
+    <section class="screen">
       <div class="meta-row">
-        <span class="badge">Result</span>
-        <span class="badge">${getFlowLabel(state.currentFlow)}</span>
+        <span class="badge">result</span>
+        <span class="badge">${entrySymptoms.find(x => x.id === state.currentFlow)?.label || "symptom checker"}</span>
       </div>
       <h2 class="result-title">${resultData.title}</h2>
       <p class="result-problem">${resultData.problem}</p>
@@ -1128,7 +1106,7 @@ function renderResultByKey(resultKey) {
 
 function renderRecommendedSettingsPrompt() {
   app.innerHTML = `
-    <section class="screen settings-prompt-screen">
+    <section class="screen">
       <h2 class="card-title">Recommended settings by playstyle</h2>
       <p class="card-copy">These are starting points, not magic settings. Pick the one that matches how you actually fight.</p>
 
@@ -1163,7 +1141,7 @@ function renderRecommendedSettingsResult(playstyle) {
   const preset = recommendedSettings[playstyle];
 
   app.innerHTML = `
-    <section class="screen settings-screen">
+    <section class="screen">
       <div class="result-section">
         <h3>${preset.title}</h3>
         <p>${preset.why}</p>
@@ -1237,7 +1215,7 @@ function renderGlossaryScreen() {
   }).join("");
 
   app.innerHTML = `
-    <section class="screen glossary-screen">
+    <section class="screen">
       <h2 class="card-title">Settings glossary</h2>
       <p class="card-copy">Use this when a result tells you to check a setting and you want the fast version of what it actually does.</p>
       <div class="glossary-list">${items}</div>

@@ -7,18 +7,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="page-glow page-glow-left" aria-hidden="true"></div>
+  <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
   <main class="app-shell">
-    <header class="topbar">
-      <div class="brand-block">
-        <img src="logo.png" alt="ZBTips" class="brand-logo" />
-        <div class="brand-copy">
-          <p class="eyebrow">Fortnite Zero Build</p>
-          <h1>ZBTips Controller Symptom Checker</h1>
-          <p class="subhead">Pick what feels wrong. Get the first settings to test. Stop changing random stuff.</p>
+    <header class="hero-panel">
+      <div class="hero-top">
+        <div class="hero-brand">
+          <img src="logo.png" alt="ZBTips logo" class="hero-logo" />
+          <div class="hero-copy">
+            <p class="eyebrow">Fortnite Zero Build</p>
+            <h1>ZBTips Controller Symptom Checker</h1>
+            <p class="subhead">Pick what feels wrong. Get the first settings to test. Stop changing random stuff.</p>
+          </div>
         </div>
+        <button id="homeButton" class="ghost-button hero-home" type="button">Home</button>
       </div>
-      <div class="topbar-actions">
-        <button id="homeButton" class="ghost-button" type="button">Home</button>
+
+      <div class="hero-strip">
+        <span class="hero-chip hero-chip-purple">Symptom-first</span>
+        <span class="hero-chip hero-chip-cyan">Controller only</span>
+        <span class="hero-chip">Zero Build</span>
       </div>
     </header>
 
