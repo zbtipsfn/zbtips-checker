@@ -14,6 +14,54 @@ const appState = {
   currentResultKey: null
 };
 
+const trainingMaps = [
+  {
+    name: "🎯 Shooting Range Aim Trainer",
+    creator: "Teadoh",
+    code: "2524-6026-4229",
+    bestFor: "ADS tracking, long-range aim, and sensitivity checks"
+  },
+  {
+    name: "QTK Training Day - Zero Build Practice",
+    creator: "Zero Build practice",
+    code: "7510-1541-2262",
+    bestFor: "close-range fights, hip fire control, and shaky aim checks"
+  }
+];
+
+const trainingTasks = {
+  "no-middle": {
+    title: "Sensitivity test",
+    mapCodes: ["2524-6026-4229", "7510-1541-2262"],
+    task: "Run one full round before changing numbers again. If one click feels too slow and the next feels too fast, test curve first, then look speed."
+  },
+  "range-close": {
+    title: "Close-range test",
+    mapCodes: ["7510-1541-2262"],
+    task: "Test hip fire first. If the player is in your face, stop hard ADSing and see if tracking gets cleaner."
+  },
+  "range-long": {
+    title: "Long-range test",
+    mapCodes: ["2524-6026-4229"],
+    task: "Test distant ADS tracking and small stick movements. Do not judge the setup off one random spray in a match."
+  },
+  "ads-wrong": {
+    title: "ADS test",
+    mapCodes: ["2524-6026-4229"],
+    task: "Test ADS by itself. Hip fire can be fine while ADS is still fighting you."
+  },
+  "loose-shaky": {
+    title: "Micro-aim test",
+    mapCodes: ["7510-1541-2262"],
+    task: "Test small stick adjustments. If your reticle jumps past the target, check deadzone, boost, or curve before blaming aim assist."
+  },
+  "recommended-settings": {
+    title: "Preset test",
+    mapCodes: ["2524-6026-4229", "7510-1541-2262"],
+    task: "Run one full training map round before changing the preset. Do not change five things and blame the game."
+  }
+};
+
 const entrySymptoms = [
   {
     id: "aim-assist-unreliable",
@@ -238,7 +286,7 @@ const recommendedSettings = {
       adsX: 9,
       adsY: 9
     },
-    warning: "Don’t call your playstyle balanced if you actually want raw, fast linear aim."
+    warning: "Don’t force exponential if linear already feels natural. If expo feels too heavy, go back to linear and use the aggressive preset as your starting point."
   },
   strategic: {
     id: "strategic",
@@ -267,7 +315,7 @@ const recommendedSettings = {
 
 const results = {
   "aim-assist-unreliable": {
-    title: "your aim assist probably isn’t gone. your setup feels unstable",
+    title: "Your aim assist probably isn’t gone. your setup feels unstable",
     problem: "This usually means connection, controller, performance, or sensitivity instability. Not that aim assist got deleted.",
     checkFirst: [
       "check whether you’re on Wi-Fi or hardwired",
@@ -292,7 +340,7 @@ const results = {
     glossary: ["Deadzone", "Look Input Curve", "Precision Aim Assist Strength", "Tracking Aim Assist Strength"]
   },
   "no-middle": {
-    title: "your setup has no middle because your tuning is fighting itself",
+    title: "Your setup has no middle because your tuning is fighting itself",
     problem: "This usually means your curve, look sens, ADS sens, or advanced settings setup does not fit how you actually play. Not that the game is broken.",
     checkFirst: [
       "check whether you should be on simple or advanced settings",
@@ -316,7 +364,7 @@ const results = {
     glossary: ["Look Input Curve", "Look Speed", "ADS Speed"]
   },
   "range-close": {
-    title: "your close-range aim is probably breaking because you’re taking the wrong kind of fight",
+    title: "Your close-range aim is probably breaking because you’re taking the wrong kind of fight",
     problem: "This usually means you’re ADSing too close, or your close-range tuning is too jumpy, too slow, or too delayed. Not that every player in your face is cheating.",
     checkFirst: [
       "check whether you’re ADSing when the player is already in your face",
@@ -340,7 +388,7 @@ const results = {
     glossary: ["Look Input Curve", "Look Speed", "Turning Boost", "Boost Ramp Time", "Look Dampening Time"]
   },
   "range-long": {
-    title: "your long-range aim is probably too raw or too disconnected",
+    title: "Your long-range aim is probably too raw or too disconnected",
     problem: "This usually means your input curve, ADS speed, or scoped tuning is making distant tracking harder than it should be. Not that every beam is cheating.",
     checkFirst: [
       "check your input curve",
@@ -364,7 +412,7 @@ const results = {
     glossary: ["Look Input Curve", "ADS Speed", "Scoped Speed Multiplier"]
   },
   "ads-wrong": {
-    title: "your ADS is fighting your normal aim",
+    title: "Your ADS is fighting your normal aim",
     problem: "This usually means your ADS speed does not match your normal look, or your curve is making ADS feel disconnected. Not that platform or cheaters are the real reason your ADS feels heavy.",
     checkFirst: [
       "check ADS horizontal and vertical speed",
@@ -388,7 +436,7 @@ const results = {
     glossary: ["ADS Speed", "Look Input Curve", "Look Speed", "Turning Boost", "Look Dampening Time"]
   },
   "input-delay": {
-    title: "this feels like delay, not bad sens",
+    title: "This feels like delay, not bad sens",
     problem: "This usually means connection, controller method, performance, or display delay. Not that your settings randomly stopped working.",
     checkFirst: [
       "check whether you’re on Wi-Fi or hardwired",
@@ -400,7 +448,8 @@ const results = {
       "don’t start by changing sens",
       "don’t copy a pro setup to fix delay",
       "don’t reinstall the game first",
-      "don’t blame aim assist"
+      "don’t blame aim assist",
+      "don’t buy a new controller before ruling out Wi-Fi, wireless delay, frame drops, and display lag"
     ],
     fixedFeelsLike: [
       "the game feels smooth again",
@@ -413,7 +462,7 @@ const results = {
     glossary: []
   },
   "loose-shaky": {
-    title: "your setup looks too jumpy or too unstable",
+    title: "Your setup looks too jumpy or too unstable",
     problem: "This usually means deadzone, boost, curve, or sens instability. Sometimes panic makes it look worse than it really is.",
     checkFirst: [
       "check deadzones",
@@ -797,6 +846,7 @@ function renderHome() {
       <div class="choice-grid">${choices}</div>
       <div class="button-row">
         <button class="primary-button" type="button" id="recommendedSettingsHome">Recommended settings by playstyle</button>
+        <button class="secondary-button" type="button" id="howToUse">How to use this tool</button>
         <button class="secondary-button" type="button" id="openGlossary">Glossary</button>
       </div>
     </section>
@@ -807,6 +857,7 @@ function renderHome() {
   });
 
   document.getElementById("recommendedSettingsHome").addEventListener("click", renderRecommendedSettingsPrompt);
+  document.getElementById("howToUse").addEventListener("click", renderHowToUseScreen);
   document.getElementById("openGlossary").addEventListener("click", renderGlossaryScreen);
 }
 
@@ -971,6 +1022,103 @@ function renderControllerRecommendations(platform) {
   `;
 }
 
+
+function getTrainingMapsForResult(resultKey) {
+  const task = trainingTasks[resultKey];
+  if (!task) return [];
+  return trainingMaps.filter(map => task.mapCodes.includes(map.code));
+}
+
+function renderTrainingMapSection(resultKey) {
+  const task = trainingTasks[resultKey];
+  if (!task) return "";
+
+  const maps = getTrainingMapsForResult(resultKey);
+
+  return `
+    <section class="result-section training-section">
+      <h3>Training map test</h3>
+      <p>${task.task}</p>
+      <div class="map-list">
+        ${maps.map(map => `
+          <div class="map-card">
+            <div>
+              <p class="map-name">${map.name}</p>
+              <p class="map-meta">${map.creator} • ${map.bestFor}</p>
+            </div>
+            <div class="map-code">${map.code}</div>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function shouldShowPS5LagChecklist(state) {
+  return state.entrySymptom === "input-delay" && state.answers.platform === "ps5";
+}
+
+function renderPS5LagChecklist() {
+  return `
+    <section class="result-section alert ps5-checklist">
+      <h3>PS5 lag checklist</h3>
+      <p>Before changing sens, check the setup first. If the screen or controller is late, your sens is not the first problem.</p>
+      <ul>
+        <li>Set controller communication to <strong>Use USB Cable</strong>: Settings → Accessories → Controller (General) → Communication Method.</li>
+        <li>Make sure your TV is in <strong>Game Mode</strong> or low-latency mode.</li>
+        <li>Check 120Hz / Performance Mode if your display supports it.</li>
+        <li>Use the correct HDMI port and cable for your display.</li>
+        <li>If you are on Wi-Fi, test hardwired internet before touching settings.</li>
+      </ul>
+    </section>
+  `;
+}
+
+function renderHowToUseScreen() {
+  app.innerHTML = `
+    <section class="screen">
+      <div class="meta-row">
+        <span class="badge">start here</span>
+        <span class="badge">no random changes</span>
+      </div>
+
+      <h2 class="card-title">How to use this tool</h2>
+      <p class="card-copy">The checker works best when you pick the problem you actually feel, not the setting you already think is broken.</p>
+
+      <div class="result-grid">
+        <section class="result-section">
+          <h3>Use it like this</h3>
+          <ul>
+            <li>Pick the issue that feels most true right now.</li>
+            <li>Read the result before changing anything.</li>
+            <li>Change one setting at a time.</li>
+            <li>Test it in a map, not only in a real fight.</li>
+            <li>If the result feels wrong, go back and pick the next closest symptom.</li>
+          </ul>
+        </section>
+
+        <section class="result-section danger">
+          <h3>Rule</h3>
+          <p>Don’t fix five things and blame the game.</p>
+        </section>
+
+        <section class="result-section">
+          <h3>Where settings usually live</h3>
+          <p>Fortnite path: Settings → Controller Options → Sensitivity.</p>
+        </section>
+      </div>
+
+      <div class="button-row">
+        <button class="primary-button" type="button" id="startFromHowTo">Start checker</button>
+        <button class="secondary-button" type="button" id="backFromHowTo">Back</button>
+      </div>
+    </section>
+  `;
+
+  document.getElementById("startFromHowTo").addEventListener("click", renderHome);
+  document.getElementById("backFromHowTo").addEventListener("click", renderHome);
+}
+
 function renderGlossaryItems(items) {
   if (!items.length) {
     return `<p class="small-note">No glossary links needed for this result.</p>`;
@@ -1031,7 +1179,11 @@ function renderResult(data, resultKey) {
           <ul>${resultData.fixedFeelsLike.map(item => `<li>${item}</li>`).join("")}</ul>
         </section>
 
+        ${shouldShowPS5LagChecklist(appState) ? renderPS5LagChecklist() : ""}
+
         ${shouldShowControllerRecommendations(appState) ? renderControllerRecommendations(appState.answers.platform) : ""}
+
+        ${renderTrainingMapSection(resultKey)}
 
         ${shouldOfferRecommendedSettings(resultKey) ? `
         <section class="result-section">
@@ -1137,52 +1289,73 @@ function renderRecommendedSettingsPrompt() {
   document.getElementById("backFromSettingsPrompt").addEventListener("click", () => appState.currentResultKey ? renderResult(results[appState.currentResultKey], appState.currentResultKey) : renderHome());
 }
 
+function formatPresetFields(preset) {
+  return `
+    <ul class="settings-list">
+      <li><strong>Look Horizontal Speed:</strong> ${preset.lookX}%</li>
+      <li><strong>Look Vertical Speed:</strong> ${preset.lookY}%</li>
+      <li><strong>ADS Look Horizontal Speed:</strong> ${preset.adsX}%</li>
+      <li><strong>ADS Look Vertical Speed:</strong> ${preset.adsY}%</li>
+    </ul>
+  `;
+}
+
+function formatFallbackFields(label, values) {
+  return `
+    <div class="settings-fallback">
+      <h3>${label}</h3>
+      <ul class="settings-list">
+        <li><strong>Look Horizontal Speed:</strong> ${values.lookX}%</li>
+        <li><strong>Look Vertical Speed:</strong> ${values.lookY}%</li>
+        <li><strong>ADS Look Horizontal Speed:</strong> ${values.adsX}%</li>
+        <li><strong>ADS Look Vertical Speed:</strong> ${values.adsY}%</li>
+      </ul>
+    </div>
+  `;
+}
+
 function renderRecommendedSettingsResult(playstyle) {
   const preset = recommendedSettings[playstyle];
 
   app.innerHTML = `
     <section class="screen">
+      <div class="meta-row">
+        <span class="badge">starting preset</span>
+        <span class="badge">${preset.curve}</span>
+      </div>
+
       <div class="result-section">
         <h3>${preset.title}</h3>
         <p>${preset.why}</p>
       </div>
 
-      <div class="result-section">
-        <h3>Curve</h3>
-        <p>${preset.curve}</p>
+      <div class="result-section success">
+        <h3>Main settings</h3>
+        <p><strong>Look Input Curve:</strong> ${preset.curve}</p>
+        ${formatPresetFields(preset)}
       </div>
 
       <div class="result-section">
-        <h3>Look</h3>
-        <p>${preset.lookX} / ${preset.lookY}</p>
+        <h3>Where to find this in Fortnite</h3>
+        <p>Settings → Controller Options → Sensitivity.</p>
       </div>
 
       <div class="result-section">
-        <h3>ADS</h3>
-        <p>${preset.adsX} / ${preset.adsY}</p>
+        ${formatFallbackFields("If this feels too fast", preset.tooFast)}
+        ${formatFallbackFields("If this feels too slow", preset.tooSlow)}
       </div>
 
-      <div class="result-section">
-        <h3>If this feels too fast</h3>
-        <p>Look: ${preset.tooFast.lookX} / ${preset.tooFast.lookY}</p>
-        <p>ADS: ${preset.tooFast.adsX} / ${preset.tooFast.adsY}</p>
-      </div>
-
-      <div class="result-section">
-        <h3>If this feels too slow</h3>
-        <p>Look: ${preset.tooSlow.lookX} / ${preset.tooSlow.lookY}</p>
-        <p>ADS: ${preset.tooSlow.adsX} / ${preset.tooSlow.adsY}</p>
-      </div>
-
-      <div class="result-section">
+      <div class="result-section danger">
         <h3>Do not do this</h3>
         <p>${preset.warning}</p>
       </div>
 
-      <div class="result-section">
+      <div class="result-section alert">
         <h3>Important</h3>
         <p>Use this as a starting point. Do not copy numbers blindly and then keep changing everything every five minutes.</p>
       </div>
+
+      ${renderTrainingMapSection("recommended-settings")}
 
       <div class="button-row">
         <button class="secondary-button" type="button" id="tryAnother">Try another</button>
@@ -1196,6 +1369,7 @@ function renderRecommendedSettingsResult(playstyle) {
   document.getElementById("backFromSettings").addEventListener("click", () => appState.currentResultKey ? renderResult(results[appState.currentResultKey], appState.currentResultKey) : renderRecommendedSettingsPrompt());
   document.getElementById("startOverFinal").addEventListener("click", renderHome);
 }
+
 
 function renderGlossaryScreen() {
   const items = Object.keys(glossary).map((name, idx) => {
