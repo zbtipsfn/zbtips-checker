@@ -35,3 +35,10 @@ Best first option: GitHub Pages.
 - Menu screenshots are stored in the root folder, not an assets folder.
 - Upload the four PNG screenshot files beside `index.html`, `style.css`, and `app.js`.
 - Added collapsible "Where this is in Fortnite" sections for relevant settings results.
+
+
+## Gyro / PC routing update
+- Added "Gyro is stealing your aim assist" result and routing inside the aim assist flow.
+- Added "Controller works everywhere except Fortnite" as a PC input routing checker.
+- Added glossary entries for Gyro Aiming, Flick Stick, and PC Input Routing.
+- Added routing from input delay when Fortnite ignores the controller or shows wrong buttons.

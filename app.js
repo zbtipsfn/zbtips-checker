@@ -92,8 +92,61 @@ const resultMenuScreens = {
   "range-close": ["advanced", "ads", "curve"],
   "range-long": ["ads", "curve"],
   "ads-wrong": ["ads", "curve"],
+  "pc-controller-routing": [
+    {
+      id: "onPC",
+      title: "Are you on PC?",
+      choices: [
+        { label: "yes", value: "pc", next: 1 },
+        { label: "no", value: "not-pc", next: "RESULT:input-delay" }
+      ]
+    },
+    {
+      id: "launcher",
+      title: "How are you launching Fortnite?",
+      choices: [
+        { label: "Epic Games Launcher directly", value: "epic", next: 2 },
+        { label: "Steam / Steam Input", value: "steam", next: 2 },
+        { label: "another launcher or shortcut", value: "other-launcher", next: 2 },
+        { label: "I don’t know", value: "unknown", next: 2 }
+      ]
+    },
+    {
+      id: "controllerModel",
+      title: "What controller are you using?",
+      choices: [
+        { label: "Xbox controller", value: "xbox", next: 3 },
+        { label: "PS4 / DualShock", value: "dualshock", next: 3 },
+        { label: "PS5 / DualSense", value: "dualsense", next: 3 },
+        { label: "Switch controller", value: "switch", next: 3 },
+        { label: "8BitDo or generic pad", value: "generic", next: 3 }
+      ]
+    },
+    {
+      id: "pcConnection",
+      title: "How is it connected?",
+      choices: [
+        { label: "wired", value: "wired", next: 4 },
+        { label: "Bluetooth", value: "bluetooth", next: 4 },
+        { label: "wireless dongle", value: "dongle", next: 4 },
+        { label: "I don’t know", value: "unknown", next: 4 }
+      ]
+    },
+    {
+      id: "pcProblem",
+      title: "What does Fortnite do?",
+      choices: [
+        { label: "Fortnite ignores controller inputs completely", value: "ignored", next: "RESULT:pc-controller-routing" },
+        { label: "Fortnite shows the wrong buttons", value: "wrong-buttons", next: "RESULT:pc-controller-routing" },
+        { label: "it works in Steam games but not Fortnite", value: "steam-only", next: "RESULT:pc-controller-routing" },
+        { label: "it works, but it feels delayed", value: "delayed", next: "RESULT:input-delay" }
+      ]
+    }
+  ],
   "loose-shaky": ["deadzones", "curve"],
-  "aim-assist-unreliable": ["advanced", "deadzones"]
+  "aim-assist-unreliable": ["advanced", "deadzones"],
+  "gyro-aim-assist-conflict": ["advanced"],
+  "pc-controller-routing": []
 };
 
 
@@ -122,6 +175,11 @@ const entrySymptoms = [
     id: "input-delay",
     label: "input delay makes the game feel unplayable",
     desc: "the game feels delayed, muddy, or behind your hands"
+  },
+  {
+    id: "pc-controller-routing",
+    label: "controller works everywhere except Fortnite",
+    desc: "PC launcher, Steam Input, wrong buttons, or no input at all"
   },
   {
     id: "loose-shaky",
@@ -225,6 +283,35 @@ const glossary = {
     ],
     checkWhen: ["aim assist unreliable"],
     confuse: "Do not confuse this with input delay or ADS speed."
+  },
+  "Gyro Aiming": {
+    controls: "Motion aim that moves your reticle when the controller moves.",
+    wrong: [
+      "Aim assist feels gone while gyro is active.",
+      "Aim feels like drift even after deadzone changes.",
+      "You copied a setup and did not realize gyro was on."
+    ],
+    checkWhen: ["aim assist feels gone", "drift-like aim", "Flick Stick confusion"],
+    confuse: "Do not confuse gyro aim with stick drift or aim assist getting nerfed."
+  },
+  "Flick Stick": {
+    controls: "A gyro-focused control style where the right stick snaps your camera direction.",
+    wrong: [
+      "Right stick behavior feels nothing like normal controller aim.",
+      "You copied a gyro setup and your aim assist feels missing."
+    ],
+    checkWhen: ["gyro is on", "aim assist feels gone", "right stick feels strange"],
+    confuse: "Do not turn this on unless you actually want a gyro setup."
+  },
+  "PC Input Routing": {
+    controls: "How Fortnite reads your controller through Epic, Steam Input, Bluetooth, wired mode, or helper apps.",
+    wrong: [
+      "Controller works in other games but Fortnite ignores it.",
+      "Fortnite shows the wrong buttons.",
+      "Steam games work but Fortnite does not."
+    ],
+    checkWhen: ["PC controller not detected", "wrong buttons", "controller works everywhere except Fortnite"],
+    confuse: "Do not confuse input routing with sensitivity or deadzone."
   }
 };
 
@@ -353,6 +440,7 @@ const results = {
     title: "your aim assist probably isn’t gone. your setup feels unstable",
     problem: "This usually means connection, controller, performance, or sensitivity instability. Not that aim assist got deleted.",
     checkFirst: [
+      "check whether Gyro Aiming or Flick Stick is on",
       "check whether you’re on Wi-Fi or hardwired",
       "check whether your controller is wired, wireless, or using a dongle",
       "check whether the game feels delayed or inconsistent",
@@ -370,9 +458,9 @@ const results = {
       "tracking feels more consistent",
       "ADS feels slightly sticky instead of loose or random"
     ],
-    reroute: "if the whole game still feels delayed, check input delay. if your aim still feels twitchy, check loose or shaky aim.",
-    testingNote: "Rule out system and connection issues before touching sens.",
-    glossary: ["Deadzone", "Look Input Curve", "Precision Aim Assist Strength", "Tracking Aim Assist Strength"]
+    reroute: "if gyro is on, check gyro is stealing your aim assist. if the whole game still feels delayed, check input delay. if your aim still feels twitchy, check loose or shaky aim.",
+    testingNote: "Rule out gyro, system, and connection issues before touching sens.",
+    glossary: ["Gyro Aiming", "Deadzone", "Look Input Curve", "Precision Aim Assist Strength", "Tracking Aim Assist Strength"]
   },
   "no-middle": {
     title: "your setup has no middle because your tuning is fighting itself",
@@ -470,6 +558,58 @@ const results = {
     testingNote: "Test hip fire and ADS separately in a training map.",
     glossary: ["ADS Speed", "Look Input Curve", "Look Speed", "Turning Boost", "Look Dampening Time"]
   },
+
+  "gyro-aim-assist-conflict": {
+    title: "Gyro is stealing your aim assist",
+    problem: "Your aim assist might not be broken. Gyro may be active, and Fortnite disables aim assist while gyro is active.",
+    checkFirst: [
+      "check if Gyro Aiming is on",
+      "check if gyro is active always, ADS only, or scoped only",
+      "check if Flick Stick is on",
+      "check if you copied a gyro setup without knowing it"
+    ],
+    dontTouchYet: [
+      "don’t change deadzone first if gyro is active",
+      "don’t assume aim assist got nerfed",
+      "don’t copy gyro settings unless you actually want gyro aim",
+      "don’t blame your controller before checking gyro"
+    ],
+    fixedFeelsLike: [
+      "aim assist feels consistent again when gyro is off",
+      "your reticle stops feeling like it randomly ignores targets",
+      "drift-like movement stops if gyro was the cause",
+      "normal stick aim feels predictable again"
+    ],
+    reroute: "if gyro is off and aim still feels unstable, check deadzones or input delay next.",
+    testingNote: "If you use gyro on purpose, this is not a bug. If you want normal aim assist, turn gyro off or limit when it activates.",
+    glossary: ["Gyro Aiming", "Flick Stick", "Tracking Aim Assist Strength", "Deadzone"]
+  },
+  "pc-controller-routing": {
+    title: "Fortnite isn’t reading your controller",
+    problem: "Your controller may not be broken. Fortnite may not be reading the input layer you’re using.",
+    checkFirst: [
+      "check whether you launch through Epic directly, Steam, or another launcher",
+      "check what controller type you’re using",
+      "test wired instead of Bluetooth",
+      "check if Fortnite ignores inputs or shows the wrong buttons",
+      "check if the controller works in Steam games but not Fortnite"
+    ],
+    dontTouchYet: [
+      "don’t change sensitivity if Fortnite is not reading the controller correctly",
+      "don’t buy a new controller before checking input routing",
+      "don’t assume the controller is dead if it works in other games",
+      "don’t tune deadzone for a controller Fortnite cannot read"
+    ],
+    fixedFeelsLike: [
+      "Fortnite sees the controller normally",
+      "buttons match what you press",
+      "menus and gameplay both respond",
+      "input feels consistent before you tune settings"
+    ],
+    reroute: "if Fortnite reads the controller but it still feels delayed, check input delay next.",
+    testingNote: "PC controller problems can be a launcher or input-layer issue before they are a settings issue.",
+    glossary: ["PC Input Routing"]
+  },
   "input-delay": {
     title: "this feels like delay, not bad sens",
     problem: "This usually means connection, controller method, performance, or display delay. Not that your settings randomly stopped working.",
@@ -491,7 +631,7 @@ const results = {
       "movement and aim stop feeling behind your hands",
       "what you do on the stick happens when you expect it"
     ],
-    reroute: "if the game feels stable but tracking still feels weak, check aim assist unreliable. if the game feels stable but aim still feels messy, check loose or shaky aim.",
+    reroute: "if Fortnite ignores the controller or shows wrong buttons, check PC controller routing. if the game feels stable but tracking still feels weak, check aim assist unreliable. if the game feels stable but aim still feels messy, check loose or shaky aim.",
     testingNote: "Check your network connection, controller type, and frame stability before changing any in-game settings.",
     glossary: []
   },
@@ -533,11 +673,30 @@ const flows = {
       ]
     },
     {
+      id: "gyroActive",
+      title: "Could gyro be active?",
+      choices: [
+        { label: "yes, Gyro Aiming is on", next: "RESULT:gyro-aim-assist-conflict" },
+        { label: "I use Flick Stick or copied gyro settings", next: "RESULT:gyro-aim-assist-conflict" },
+        { label: "I don’t know", next: 2 },
+        { label: "no", next: 3 }
+      ]
+    },
+    {
+      id: "gyroDrift",
+      title: "Does aim feel like drift even after deadzone changes?",
+      choices: [
+        { label: "yes", next: "RESULT:gyro-aim-assist-conflict" },
+        { label: "no", next: 3 },
+        { label: "not sure", next: 3 }
+      ]
+    },
+    {
       id: "setup",
       title: "How is your setup connected?",
       choices: [
-        { label: "hardwired internet + wired controller", next: 2 },
-        { label: "hardwired internet + wireless controller", next: 2 },
+        { label: "hardwired internet + wired controller", next: 4 },
+        { label: "hardwired internet + wireless controller", next: 4 },
         { label: "Wi-Fi + wired controller", next: "RESULT:aim-assist-unreliable" },
         { label: "Wi-Fi + wireless controller", next: "RESULT:aim-assist-unreliable" }
       ]
@@ -807,7 +966,59 @@ const flows = {
         { label: "my aim feels delayed", value: "aim-delayed", next: "RESULT:input-delay" },
         { label: "my movement feels delayed", value: "movement-delayed", next: "RESULT:input-delay" },
         { label: "my controller feels delayed", value: "controller-delayed", next: "RESULT:input-delay" },
-        { label: "everything feels behind my hands", value: "behind-hands", next: "RESULT:input-delay" }
+        { label: "everything feels behind my hands", value: "behind-hands", next: "RESULT:input-delay" },
+        { label: "Fortnite ignores the controller or shows wrong buttons", value: "pc-routing", next: "RESULT:pc-controller-routing" }
+      ]
+    }
+  ],
+  "pc-controller-routing": [
+    {
+      id: "onPC",
+      title: "Are you on PC?",
+      choices: [
+        { label: "yes", value: "pc", next: 1 },
+        { label: "no", value: "not-pc", next: "RESULT:input-delay" }
+      ]
+    },
+    {
+      id: "launcher",
+      title: "How are you launching Fortnite?",
+      choices: [
+        { label: "Epic Games Launcher directly", value: "epic", next: 2 },
+        { label: "Steam / Steam Input", value: "steam", next: 2 },
+        { label: "another launcher or shortcut", value: "other-launcher", next: 2 },
+        { label: "I don’t know", value: "unknown", next: 2 }
+      ]
+    },
+    {
+      id: "controllerModel",
+      title: "What controller are you using?",
+      choices: [
+        { label: "Xbox controller", value: "xbox", next: 3 },
+        { label: "PS4 / DualShock", value: "dualshock", next: 3 },
+        { label: "PS5 / DualSense", value: "dualsense", next: 3 },
+        { label: "Switch controller", value: "switch", next: 3 },
+        { label: "8BitDo or generic pad", value: "generic", next: 3 }
+      ]
+    },
+    {
+      id: "pcConnection",
+      title: "How is it connected?",
+      choices: [
+        { label: "wired", value: "wired", next: 4 },
+        { label: "Bluetooth", value: "bluetooth", next: 4 },
+        { label: "wireless dongle", value: "dongle", next: 4 },
+        { label: "I don’t know", value: "unknown", next: 4 }
+      ]
+    },
+    {
+      id: "pcProblem",
+      title: "What does Fortnite do?",
+      choices: [
+        { label: "Fortnite ignores controller inputs completely", value: "ignored", next: "RESULT:pc-controller-routing" },
+        { label: "Fortnite shows the wrong buttons", value: "wrong-buttons", next: "RESULT:pc-controller-routing" },
+        { label: "it works in Steam games but not Fortnite", value: "steam-only", next: "RESULT:pc-controller-routing" },
+        { label: "it works, but it feels delayed", value: "delayed", next: "RESULT:input-delay" }
       ]
     }
   ],
