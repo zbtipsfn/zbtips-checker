@@ -67,22 +67,22 @@ const trainingGuides = {
 const menuScreens = {
   advanced: {
     title: "Advanced settings",
-    file: "assets/fn-controller-advanced-settings.png",
+    file: "fn-controller-advanced-settings.png",
     caption: "Use this when the app tells you to check Advanced Options, Look Speed, or ADS values."
   },
   ads: {
     title: "ADS and look speed",
-    file: "assets/fn-controller-ads-settings.png",
+    file: "fn-controller-ads-settings.png",
     caption: "This is where Look Horizontal / Vertical Speed and ADS Look Horizontal / Vertical Speed live."
   },
   curve: {
     title: "Look input curve",
-    file: "assets/fn-controller-input-curve.png",
+    file: "fn-controller-input-curve.png",
     caption: "This is where you check Linear vs Exponential."
   },
   deadzones: {
     title: "Deadzones",
-    file: "assets/fn-controller-deadzones.png",
+    file: "fn-controller-deadzones.png",
     caption: "Use this when aim feels loose, shaky, twitchy, or stick drift is possible."
   }
 };
