@@ -25,3 +25,8 @@ Best first option: GitHub Pages.
 - Added Fortnite settings path guidance.
 - Added symptom-specific training map tasks.
 - Added PS5 lag checklist for input delay results when the user selects PS5.
+
+## How-to placement update
+- The "How to use this tool" button now appears first at the top of the home screen.
+- The visible header title now reads "Controller Symptom Checker" because the logo already carries the ZBTips brand.
+- CSS and JS are cache-busted in `index.html` with a version query.

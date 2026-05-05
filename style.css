@@ -757,3 +757,16 @@ h3,
     text-align: center;
   }
 }
+
+
+/* Home screen priority action */
+.home-top-actions {
+  margin-top: 0;
+  margin-bottom: 22px;
+}
+
+.home-howto-button {
+  box-shadow:
+    0 12px 30px rgba(40, 231, 255, 0.24),
+    0 0 0 1px rgba(40, 231, 255, 0.18);
+}

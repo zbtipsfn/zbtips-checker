@@ -841,12 +841,15 @@ function renderHome() {
 
   app.innerHTML = `
     <section class="screen">
+      <div class="button-row home-top-actions">
+        <button class="primary-button home-howto-button" type="button" id="howToUse">How to use this tool</button>
+      </div>
+
       <h2 class="card-title">What feels wrong most?</h2>
       <p class="card-copy">Pick the closest symptom first. The checker sorts the real problem after that.</p>
       <div class="choice-grid">${choices}</div>
       <div class="button-row">
-        <button class="primary-button" type="button" id="recommendedSettingsHome">Recommended settings by playstyle</button>
-        <button class="secondary-button" type="button" id="howToUse">How to use this tool</button>
+        <button class="secondary-button" type="button" id="recommendedSettingsHome">Recommended settings by playstyle</button>
         <button class="secondary-button" type="button" id="openGlossary">Glossary</button>
       </div>
     </section>
