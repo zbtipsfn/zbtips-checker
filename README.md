@@ -98,3 +98,19 @@ This version inserts the Controller Lab promo section between the hero header an
 - Kept the custom Get Controller Lab for $2 CTA
 - Tightened the promo copy and feature pills
 - Bumped CSS/JS cache versions to help GitHub Pages show the latest update
+
+
+## Checkout page update
+
+The home page `Get Controller Lab for $2` button now goes to `checkout.html`.
+
+Why:
+- The hidden Stripe embed trigger was unreliable.
+- The new checkout page shows the Stripe Buy Button directly.
+- This gives buyers a clean dedicated page to complete payment.
+
+Files changed:
+- index.html cache version bumped
+- app.js button now routes to checkout.html
+- checkout.html added
+- style.css checkout layout added

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Controller Lab | ZBTips</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=checkout-page-v1" />
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+</head>
+<body>
+  <div class="page-glow page-glow-left" aria-hidden="true"></div>
+  <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+  <main class="app-shell checkout-shell">
+    <header class="hero-panel checkout-hero">
+      <div class="hero-top">
+        <div class="hero-brand">
+          <img src="logo.png" alt="ZBTips logo" class="hero-logo" />
+          <div class="hero-copy">
+            <p class="eyebrow">Controller Lab</p>
+            <h1 class="app-title">Get the full fix path.</h1>
+            <p class="subhead">One checkout page. Use the same email you want added to Controller Lab access.</p>
+          </div>
+        </div>
+        <a class="ghost-button hero-home checkout-back" href="index.html">Back to checker</a>
+      </div>
+    </header>
+
+    <section class="checkout-layout">
+      <div class="screen checkout-copy-panel">
+        <p class="eyebrow lab-eyebrow">What you get</p>
+        <h2 class="card-title">Controller Lab access</h2>
+        <p class="card-copy">
+          Controller Lab is the deeper paid tool after the free checker. It gives you controlled fix paths,
+          module pages, settings guardrails, bind checks, gyro checks, and bug-vs-settings routing.
+        </p>
+
+        <div class="lab-promo-points checkout-points">
+          <span>Full Fix Plan</span>
+          <span>Symptom Recipes</span>
+          <span>Do Not Touch Yet</span>
+          <span>Bug vs Settings</span>
+          <span>Quick Weapon / Binds</span>
+          <span>Gyro / Aim Assist</span>
+        </div>
+
+        <p class="lab-access-note checkout-note">
+          After purchase, use the same email for Cloudflare one-time PIN access.
+        </p>
+
+        <a class="promo-open-link checkout-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">
+          Already purchased? Open Controller Lab
+        </a>
+      </div>
+
+      <div class="screen checkout-stripe-panel">
+        <p class="eyebrow lab-eyebrow">Checkout</p>
+        <div class="stripe-visible-wrap">
+          <stripe-buy-button
+            buy-button-id="buy_btn_1TU5ua12GruX4WYOzJW1IIFV"
+            publishable-key="pk_live_51TTx5512GruX4WYODgJnupqMFYP2rG0oOuAG99TXr223Rrz3oBOlJCoSnYpiuiL1v2rWmXwPYOJsTduHlroLhDHu00iEXpSY4Q">
+          </stripe-buy-button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

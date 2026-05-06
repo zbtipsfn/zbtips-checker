@@ -1391,3 +1391,59 @@ h3,
     grid-template-columns: 1fr;
   }
 }
+
+
+.checkout-shell {
+  max-width: 1180px;
+}
+
+.checkout-hero {
+  margin-bottom: 18px;
+}
+
+.checkout-back {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.checkout-copy-panel,
+.checkout-stripe-panel {
+  min-height: 100%;
+}
+
+.checkout-points {
+  margin-top: 18px;
+}
+
+.checkout-note {
+  margin-top: 18px;
+}
+
+.checkout-open-link {
+  display: inline-flex;
+  margin-top: 14px;
+}
+
+.stripe-visible-wrap {
+  display: grid;
+  justify-items: center;
+  margin-top: 10px;
+}
+
+.stripe-visible-wrap stripe-buy-button {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+}

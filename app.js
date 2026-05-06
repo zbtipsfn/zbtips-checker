@@ -1125,12 +1125,6 @@ function renderHome() {
             <a class="promo-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">Already purchased? Open Controller Lab</a>
           </div>
           <p class="lab-access-note">Use the free checker first. Buy this only if you want the deeper tool after that.</p>
-          <div class="stripe-checkout-proxy" aria-hidden="true">
-            <stripe-buy-button
-              buy-button-id="buy_btn_1TU5ua12GruX4WYOzJW1IIFV"
-              publishable-key="pk_live_51TTx5512GruX4WYODgJnupqMFYP2rG0oOuAG99TXr223Rrz3oBOlJCoSnYpiuiL1v2rWmXwPYOJsTduHlroLhDHu00iEXpSY4Q">
-            </stripe-buy-button>
-          </div>
         </div>
         <div class="home-lab-promo-visual">
           <div class="lab-carousel" id="labCarousel" aria-label="Controller Lab screenshots carousel">
@@ -1176,22 +1170,7 @@ function renderHome() {
   const controllerLabCheckout = document.getElementById("controllerLabCheckout");
   if (controllerLabCheckout) {
     controllerLabCheckout.addEventListener("click", () => {
-      const stripeEmbed = app.querySelector(".stripe-checkout-proxy stripe-buy-button");
-      let launched = false;
-
-      try {
-        const internalButton = stripeEmbed?.shadowRoot?.querySelector("button");
-        if (internalButton) {
-          internalButton.click();
-          launched = true;
-        }
-      } catch (error) {
-        console.warn("Stripe checkout button trigger failed", error);
-      }
-
-      if (!launched) {
-        window.alert("Checkout is still loading. Refresh once and try again.");
-      }
+      window.location.href = "checkout.html";
     });
   }
 
