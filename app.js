@@ -1108,12 +1108,14 @@ function renderHome() {
         <div class="home-lab-promo-copy">
           <p class="eyebrow lab-eyebrow">Controller Lab</p>
           <h3 id="controllerLabTitle">Want the full fix path?</h3>
-          <p>
-            The free checker tells you what is probably wrong. Controller Lab tells you what to
-            change first, what not to touch, how to test it, and when to revert.
+          <p class="home-lab-description">
+            Controller Lab is the paid follow-up tool for players who want the deeper version.
+            It turns one symptom into a controlled path, then gives you focused modules for fix plans,
+            recipes, binds, gyro checks, and settings analysis.
           </p>
           <div class="lab-promo-points" aria-label="Controller Lab includes">
             <span>Full Fix Plan</span>
+            <span>Symptom Recipes</span>
             <span>Do Not Touch Yet</span>
             <span>Bug vs Settings</span>
             <span>Quick Weapon / Binds</span>
@@ -1122,7 +1124,7 @@ function renderHome() {
             <button class="lab-buy-cta" type="button" id="controllerLabCheckout">Get Controller Lab for $2</button>
             <a class="promo-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">Already purchased? Open Controller Lab</a>
           </div>
-          <p class="lab-access-note">Use the free checker first. Buy this only if you want the deeper tool.</p>
+          <p class="lab-access-note">Use the free checker first. Buy this only if you want the deeper tool after that.</p>
           <div class="stripe-checkout-proxy" aria-hidden="true">
             <stripe-buy-button
               buy-button-id="buy_btn_1TU5ua12GruX4WYOzJW1IIFV"
@@ -1131,7 +1133,38 @@ function renderHome() {
           </div>
         </div>
         <div class="home-lab-promo-visual">
-          <img src="controller-lab-preview.png" alt="Controller Lab app preview" class="lab-preview-image" />
+          <div class="lab-carousel" id="labCarousel" aria-label="Controller Lab screenshots carousel">
+            <div class="lab-carousel-viewport">
+              <div class="lab-carousel-track" id="labCarouselTrack">
+                <figure class="lab-carousel-slide is-active">
+                  <img src="lab-slide-1.png" alt="Controller Lab homepage" class="lab-preview-image" />
+                  <figcaption>Start on the main hub and open the system you need.</figcaption>
+                </figure>
+                <figure class="lab-carousel-slide">
+                  <img src="lab-slide-2.png" alt="Controller Lab module overview" class="lab-preview-image" />
+                  <figcaption>Jump straight into the exact module instead of guessing.</figcaption>
+                </figure>
+                <figure class="lab-carousel-slide">
+                  <img src="lab-slide-3.png" alt="Controller Lab fix plan generator" class="lab-preview-image" />
+                  <figcaption>Generate a controlled fix order from one symptom.</figcaption>
+                </figure>
+                <figure class="lab-carousel-slide">
+                  <img src="lab-slide-4.png" alt="Controller Lab settings change tracker" class="lab-preview-image" />
+                  <figcaption>Log one settings change and analyze one clean adjustment.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="lab-carousel-controls">
+              <button class="lab-carousel-nav" type="button" id="labCarouselPrev" aria-label="Previous screenshot">‹</button>
+              <div class="lab-carousel-dots" id="labCarouselDots" aria-label="Choose screenshot">
+                <button class="lab-carousel-dot is-active" type="button" data-slide="0" aria-label="Show screenshot 1"></button>
+                <button class="lab-carousel-dot" type="button" data-slide="1" aria-label="Show screenshot 2"></button>
+                <button class="lab-carousel-dot" type="button" data-slide="2" aria-label="Show screenshot 3"></button>
+                <button class="lab-carousel-dot" type="button" data-slide="3" aria-label="Show screenshot 4"></button>
+              </div>
+              <button class="lab-carousel-nav" type="button" id="labCarouselNext" aria-label="Next screenshot">›</button>
+            </div>
+          </div>
         </div>
       </section>
     </section>
@@ -1166,6 +1199,43 @@ function renderHome() {
       }
     });
   }
+
+  const carouselTrack = document.getElementById("labCarouselTrack");
+  const carouselSlides = Array.from(app.querySelectorAll(".lab-carousel-slide"));
+  const carouselDots = Array.from(app.querySelectorAll(".lab-carousel-dot"));
+  const carouselPrev = document.getElementById("labCarouselPrev");
+  const carouselNext = document.getElementById("labCarouselNext");
+  let activeSlide = 0;
+  let startX = 0;
+  let endX = 0;
+
+  const updateCarousel = (nextIndex) => {
+    if (!carouselTrack || !carouselSlides.length) return;
+    activeSlide = (nextIndex + carouselSlides.length) % carouselSlides.length;
+    carouselTrack.style.transform = `translateX(-${activeSlide * 100}%)`;
+    carouselSlides.forEach((slide, index) => slide.classList.toggle("is-active", index === activeSlide));
+    carouselDots.forEach((dot, index) => dot.classList.toggle("is-active", index === activeSlide));
+  };
+
+  carouselPrev?.addEventListener("click", () => updateCarousel(activeSlide - 1));
+  carouselNext?.addEventListener("click", () => updateCarousel(activeSlide + 1));
+  carouselDots.forEach((dot) => {
+    dot.addEventListener("click", () => updateCarousel(Number(dot.dataset.slide || 0)));
+  });
+
+  const carouselViewport = app.querySelector(".lab-carousel-viewport");
+  carouselViewport?.addEventListener("touchstart", (event) => {
+    startX = event.changedTouches[0].clientX;
+  }, { passive: true });
+
+  carouselViewport?.addEventListener("touchend", (event) => {
+    endX = event.changedTouches[0].clientX;
+    const delta = endX - startX;
+    if (Math.abs(delta) < 40) return;
+    updateCarousel(activeSlide + (delta < 0 ? 1 : -1));
+  }, { passive: true });
+
+  updateCarousel(0);
 }
 
 function startFlow(flowId) {

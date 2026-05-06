@@ -82,3 +82,19 @@ This version inserts the Controller Lab promo section between the hero header an
 - Moved Controller Lab promo to the bottom of the home screen so users see the symptom checker first
 - Added a Controller Lab preview screenshot inside the promo section
 - Kept the Stripe buy button inside the lower promo section
+
+
+## Cleaner bottom promo update
+- Removed the giant visible Stripe product card
+- Added a custom ZBTips-styled Get Controller Lab for $2 button
+- Kept the Stripe buy button hidden and triggered by the custom CTA
+- Kept only the screenshot on the right
+- Turned Already purchased into a smaller text link
+
+
+## Controller Lab carousel promo update
+- Replaced the single screenshot with a swipeable carousel of Controller Lab screenshots
+- Added short descriptions under each slide to explain the app
+- Kept the custom Get Controller Lab for $2 CTA
+- Tightened the promo copy and feature pills
+- Bumped CSS/JS cache versions to help GitHub Pages show the latest update
