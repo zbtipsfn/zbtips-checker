@@ -6,7 +6,7 @@
   <title>Controller Symptom Checker | ZBTips</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=controller-lab-promo-fixed" />
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<script async src="https://js.stripe.com/v3/buy-button.js"></script> 
 </head>
 <body>
   <div class="page-glow page-glow-left" aria-hidden="true"></div>
@@ -31,7 +31,44 @@
         <span class="hero-chip hero-chip-cyan">Controller only</span>
         <span class="hero-chip">Zero Build</span>
       </div>
-    </header>
+       </header>
+
+    <section class="controller-lab-promo" aria-labelledby="controllerLabTitle">
+      <div class="lab-promo-copy">
+        <p class="eyebrow lab-eyebrow">Controller Lab</p>
+        <h2 id="controllerLabTitle">Want the full fix path?</h2>
+        <p>
+          The free checker tells you what is probably wrong. Controller Lab gives you the full repair path:
+          what to change first, what not to touch, how to test it, and when to revert.
+        </p>
+
+        <div class="lab-promo-points" aria-label="Controller Lab includes">
+          <span>Fix Plan Generator</span>
+          <span>Settings Guardrails</span>
+          <span>Bug vs Settings</span>
+          <span>Quick Weapon / Binds</span>
+        </div>
+      </div>
+
+      <div class="lab-promo-action">
+        <p class="lab-price">One-time access</p>
+
+               <div class="stripe-buy-button-wrap">
+          <stripe-buy-button
+            buy-button-id="buy_btn_1TU5ua12GruX4WYOzJW1IIFV"
+            publishable-key="pk_live_51TTx5512GruX4WYODgJnupqMFYP2rG0oOuAG99TXr223Rrz3oBOlJCoSnYpiuiL1v2rWmXwPYOJsTduHlroLhDHu00iEXpSY4Q">
+          </stripe-buy-button>
+        </div>
+
+        <a class="lab-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">
+          Already purchased? Open Controller Lab
+        </a>
+
+        <p class="lab-access-note">
+          Use the same email you purchase with. Access is protected by Cloudflare one-time PIN.
+        </p>
+      </div>
+    </section>
 
     <section id="app" aria-live="polite"></section>
 
