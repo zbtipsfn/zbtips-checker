@@ -1141,16 +1141,12 @@ function renderHome() {
                   <figcaption>Start on the main hub and open the system you need.</figcaption>
                 </figure>
                 <figure class="lab-carousel-slide">
-                  <img src="lab-slide-2.png" alt="Controller Lab module overview" class="lab-preview-image" />
-                  <figcaption>Jump straight into the exact module instead of guessing.</figcaption>
+                  <img src="lab-slide-2.jpg" alt="Controller Lab module pages" class="lab-preview-image" />
+                  <figcaption>Open the exact module you need instead of guessing.</figcaption>
                 </figure>
                 <figure class="lab-carousel-slide">
-                  <img src="lab-slide-3.png" alt="Controller Lab fix plan generator" class="lab-preview-image" />
-                  <figcaption>Generate a controlled fix order from one symptom.</figcaption>
-                </figure>
-                <figure class="lab-carousel-slide">
-                  <img src="lab-slide-4.png" alt="Controller Lab settings change tracker" class="lab-preview-image" />
-                  <figcaption>Log one settings change and analyze one clean adjustment.</figcaption>
+                  <img src="lab-slide-3.jpg" alt="Controller Lab fix plan generator" class="lab-preview-image" />
+                  <figcaption>Build the first controlled fix path from one symptom.</figcaption>
                 </figure>
               </div>
             </div>
@@ -1160,7 +1156,6 @@ function renderHome() {
                 <button class="lab-carousel-dot is-active" type="button" data-slide="0" aria-label="Show screenshot 1"></button>
                 <button class="lab-carousel-dot" type="button" data-slide="1" aria-label="Show screenshot 2"></button>
                 <button class="lab-carousel-dot" type="button" data-slide="2" aria-label="Show screenshot 3"></button>
-                <button class="lab-carousel-dot" type="button" data-slide="3" aria-label="Show screenshot 4"></button>
               </div>
               <button class="lab-carousel-nav" type="button" id="labCarouselNext" aria-label="Next screenshot">›</button>
             </div>
