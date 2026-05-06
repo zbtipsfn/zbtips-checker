@@ -1681,3 +1681,5 @@ function renderGlossaryScreen() {
 homeButton.addEventListener("click", renderHome);
 
 renderHome();
+
+

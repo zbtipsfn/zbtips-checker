@@ -42,3 +42,31 @@ Best first option: GitHub Pages.
 - Added "Controller works everywhere except Fortnite" as a PC input routing checker.
 - Added glossary entries for Gyro Aiming, Flick Stick, and PC Input Routing.
 - Added routing from input delay when Fortnite ignores the controller or shows wrong buttons.
+
+
+## Controller Lab promo + Stripe payment button
+
+Added a homepage section advertising Controller Lab.
+
+To connect Stripe:
+1. Create your Stripe Payment Link.
+2. Open `app.js`.
+3. Find:
+   `const CONTROLLER_LAB_PAYMENT_LINK = "PASTE_STRIPE_PAYMENT_LINK_HERE";`
+4. Replace it with your Stripe Payment Link, for example:
+   `const CONTROLLER_LAB_PAYMENT_LINK = "https://buy.stripe.com/abc123";`
+5. Commit the change to GitHub.
+6. Cloudflare will deploy automatically.
+
+The "Already purchased?" link goes to:
+https://controllerlabzbtips.com
+
+
+## Stripe Buy Button connected
+
+The Controller Lab promo section now uses the live Stripe Buy Button:
+
+- buy-button-id: buy_btn_1TU5ua12GruX4WYOzJW1IIFV
+- publishable key added in the Stripe embed
+
+The old placeholder JavaScript payment link logic was removed.

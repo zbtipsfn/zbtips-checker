@@ -863,3 +863,149 @@ h3,
 .settings-list strong {
   color: var(--text);
 }
+
+
+.controller-lab-promo {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(250px, 0.65fr);
+  gap: 18px;
+  margin: 0 0 22px;
+  padding: 20px;
+  border: 1px solid rgba(112, 255, 214, 0.26);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(112, 255, 214, 0.12), transparent 36%),
+    linear-gradient(135deg, rgba(20, 28, 46, 0.96), rgba(9, 17, 30, 0.96));
+  box-shadow: var(--cyan-glow), var(--shadow);
+}
+
+.controller-lab-promo::before {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -110px;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(112, 255, 214, 0.24), transparent 68%);
+  pointer-events: none;
+}
+
+.lab-promo-copy,
+.lab-promo-action {
+  position: relative;
+  z-index: 1;
+}
+
+.lab-eyebrow {
+  color: var(--success);
+}
+
+.controller-lab-promo h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 4vw, 2.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.controller-lab-promo p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.lab-promo-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.lab-promo-points span {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  border: 1px solid rgba(40, 231, 255, 0.18);
+  background: rgba(40, 231, 255, 0.08);
+}
+
+.lab-promo-action {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(5, 11, 20, 0.52);
+}
+
+.lab-price {
+  margin: 0;
+  color: var(--success) !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+
+.lab-buy-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 16px;
+  color: #03120e;
+  background: linear-gradient(135deg, var(--success), var(--cyan));
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 0.98rem;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(40, 231, 255, 0.16);
+}
+
+.lab-buy-button:hover {
+  transform: translateY(-1px);
+}
+
+.lab-open-link {
+  display: inline-flex;
+  justify-content: center;
+  color: var(--cyan-2);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.lab-open-link:hover {
+  text-decoration: underline;
+}
+
+.lab-access-note {
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 760px) {
+  .controller-lab-promo {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.stripe-buy-button-wrap {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+}
+
+.stripe-buy-button-wrap stripe-buy-button {
+  width: 100%;
+}
