@@ -70,3 +70,9 @@ The Controller Lab promo section now uses the live Stripe Buy Button:
 - publishable key added in the Stripe embed
 
 The old placeholder JavaScript payment link logic was removed.
+
+
+## Fixed Stripe promo insertion
+
+The Stripe script and CSS were present, but the actual promo section was missing from index.html.
+This version inserts the Controller Lab promo section between the hero header and the checker app section.
