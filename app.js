@@ -1109,30 +1109,29 @@ function renderHome() {
           <p class="eyebrow lab-eyebrow">Controller Lab</p>
           <h3 id="controllerLabTitle">Want the full fix path?</h3>
           <p>
-            Use the symptom checker first. If you want the deeper version after that,
-            Controller Lab gives you the full path: what to change first, what not to touch,
-            how to test it, and when to revert.
+            The free checker tells you what is probably wrong. Controller Lab tells you what to
+            change first, what not to touch, how to test it, and when to revert.
           </p>
           <div class="lab-promo-points" aria-label="Controller Lab includes">
-            <span>Full Fix Plan Generator</span>
+            <span>Full Fix Plan</span>
             <span>Do Not Touch Yet</span>
             <span>Bug vs Settings</span>
             <span>Quick Weapon / Binds</span>
-            <span>Gyro / Aim Assist</span>
           </div>
-          <div class="button-row promo-button-row">
-            <a class="secondary-button promo-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">Already purchased? Open Controller Lab</a>
+          <div class="promo-actions">
+            <button class="lab-buy-cta" type="button" id="controllerLabCheckout">Get Controller Lab for $2</button>
+            <a class="promo-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">Already purchased? Open Controller Lab</a>
           </div>
-          <p class="lab-access-note">Buy access only if you want the deeper tool after using the checker. Access is protected by Cloudflare one-time PIN.</p>
-        </div>
-        <div class="home-lab-promo-visual">
-          <img src="controller-lab-preview.png" alt="Controller Lab app preview" class="lab-preview-image" />
-          <div class="stripe-buy-button-wrap home-stripe-buy">
+          <p class="lab-access-note">Use the free checker first. Buy this only if you want the deeper tool.</p>
+          <div class="stripe-checkout-proxy" aria-hidden="true">
             <stripe-buy-button
               buy-button-id="buy_btn_1TU5ua12GruX4WYOzJW1IIFV"
               publishable-key="pk_live_51TTx5512GruX4WYODgJnupqMFYP2rG0oOuAG99TXr223Rrz3oBOlJCoSnYpiuiL1v2rWmXwPYOJsTduHlroLhDHu00iEXpSY4Q">
             </stripe-buy-button>
           </div>
+        </div>
+        <div class="home-lab-promo-visual">
+          <img src="controller-lab-preview.png" alt="Controller Lab app preview" class="lab-preview-image" />
         </div>
       </section>
     </section>
@@ -1145,6 +1144,28 @@ function renderHome() {
   document.getElementById("openHowTo").addEventListener("click", renderHowToScreen);
   document.getElementById("recommendedSettingsHome").addEventListener("click", renderRecommendedSettingsPrompt);
   document.getElementById("openGlossary").addEventListener("click", renderGlossaryScreen);
+
+  const controllerLabCheckout = document.getElementById("controllerLabCheckout");
+  if (controllerLabCheckout) {
+    controllerLabCheckout.addEventListener("click", () => {
+      const stripeEmbed = app.querySelector(".stripe-checkout-proxy stripe-buy-button");
+      let launched = false;
+
+      try {
+        const internalButton = stripeEmbed?.shadowRoot?.querySelector("button");
+        if (internalButton) {
+          internalButton.click();
+          launched = true;
+        }
+      } catch (error) {
+        console.warn("Stripe checkout button trigger failed", error);
+      }
+
+      if (!launched) {
+        window.alert("Checkout is still loading. Refresh once and try again.");
+      }
+    });
+  }
 }
 
 function startFlow(flowId) {
