@@ -1131,15 +1131,21 @@ function renderHome() {
             <div class="lab-carousel-viewport">
               <div class="lab-carousel-track" id="labCarouselTrack">
                 <figure class="lab-carousel-slide is-active">
-                  <img src="lab-slide-1.png" alt="Controller Lab homepage" class="lab-preview-image" />
+                  <button class="lab-preview-trigger" type="button" aria-label="Open screenshot full screen">
+                    <img src="lab-slide-1.png" alt="Controller Lab homepage" class="lab-preview-image" />
+                  </button>
                   <figcaption>Start on the main hub and open the system you need.</figcaption>
                 </figure>
                 <figure class="lab-carousel-slide">
-                  <img src="lab-slide-2.jpg" alt="Controller Lab module pages" class="lab-preview-image" />
+                  <button class="lab-preview-trigger" type="button" aria-label="Open screenshot full screen">
+                    <img src="lab-slide-2.jpg" alt="Controller Lab module pages" class="lab-preview-image" />
+                  </button>
                   <figcaption>Open the exact module you need instead of guessing.</figcaption>
                 </figure>
                 <figure class="lab-carousel-slide">
-                  <img src="lab-slide-3.jpg" alt="Controller Lab fix plan generator" class="lab-preview-image" />
+                  <button class="lab-preview-trigger" type="button" aria-label="Open screenshot full screen">
+                    <img src="lab-slide-3.jpg" alt="Controller Lab fix plan generator" class="lab-preview-image" />
+                  </button>
                   <figcaption>Build the first controlled fix path from one symptom.</figcaption>
                 </figure>
               </div>
@@ -1152,6 +1158,13 @@ function renderHome() {
                 <button class="lab-carousel-dot" type="button" data-slide="2" aria-label="Show screenshot 3"></button>
               </div>
               <button class="lab-carousel-nav" type="button" id="labCarouselNext" aria-label="Next screenshot">›</button>
+            </div>
+            <div class="lab-lightbox" id="labLightbox" hidden>
+              <button class="lab-lightbox-close" type="button" id="labLightboxClose" aria-label="Close full screen preview">×</button>
+              <div class="lab-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Controller Lab screenshot preview">
+                <img src="" alt="" class="lab-lightbox-image" id="labLightboxImage" />
+                <p class="lab-lightbox-caption" id="labLightboxCaption"></p>
+              </div>
             </div>
           </div>
         </div>
@@ -1208,6 +1221,45 @@ function renderHome() {
     if (Math.abs(delta) < 40) return;
     updateCarousel(activeSlide + (delta < 0 ? 1 : -1));
   }, { passive: true });
+
+  const labLightbox = document.getElementById("labLightbox");
+  const labLightboxImage = document.getElementById("labLightboxImage");
+  const labLightboxCaption = document.getElementById("labLightboxCaption");
+  const labLightboxClose = document.getElementById("labLightboxClose");
+  const previewTriggers = Array.from(app.querySelectorAll(".lab-preview-trigger"));
+
+  const closeLightbox = () => {
+    if (!labLightbox) return;
+    labLightbox.hidden = true;
+    document.body.classList.remove("lightbox-open");
+  };
+
+  const openLightbox = (img, captionText) => {
+    if (!labLightbox || !labLightboxImage || !labLightboxCaption || !img) return;
+    labLightboxImage.src = img.getAttribute("src") || "";
+    labLightboxImage.alt = img.getAttribute("alt") || "Controller Lab screenshot";
+    labLightboxCaption.textContent = captionText || "";
+    labLightbox.hidden = false;
+    document.body.classList.add("lightbox-open");
+  };
+
+  previewTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const img = trigger.querySelector("img");
+      const captionText = trigger.closest("figure")?.querySelector("figcaption")?.textContent?.trim() || "";
+      openLightbox(img, captionText);
+    });
+  });
+
+  labLightboxClose?.addEventListener("click", closeLightbox);
+  labLightbox?.addEventListener("click", (event) => {
+    if (event.target === labLightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && labLightbox && !labLightbox.hidden) {
+      closeLightbox();
+    }
+  });
 
   updateCarousel(0);
 }
