@@ -1103,6 +1103,38 @@ function renderHome() {
         <button class="primary-button" type="button" id="recommendedSettingsHome">Recommended settings by playstyle</button>
         <button class="secondary-button" type="button" id="openGlossary">Glossary</button>
       </div>
+
+      <section class="home-lab-promo" aria-labelledby="controllerLabTitle">
+        <div class="home-lab-promo-copy">
+          <p class="eyebrow lab-eyebrow">Controller Lab</p>
+          <h3 id="controllerLabTitle">Want the full fix path?</h3>
+          <p>
+            Use the symptom checker first. If you want the deeper version after that,
+            Controller Lab gives you the full path: what to change first, what not to touch,
+            how to test it, and when to revert.
+          </p>
+          <div class="lab-promo-points" aria-label="Controller Lab includes">
+            <span>Full Fix Plan Generator</span>
+            <span>Do Not Touch Yet</span>
+            <span>Bug vs Settings</span>
+            <span>Quick Weapon / Binds</span>
+            <span>Gyro / Aim Assist</span>
+          </div>
+          <div class="button-row promo-button-row">
+            <a class="secondary-button promo-open-link" href="https://controllerlabzbtips.com" target="_blank" rel="noopener">Already purchased? Open Controller Lab</a>
+          </div>
+          <p class="lab-access-note">Buy access only if you want the deeper tool after using the checker. Access is protected by Cloudflare one-time PIN.</p>
+        </div>
+        <div class="home-lab-promo-visual">
+          <img src="controller-lab-preview.png" alt="Controller Lab app preview" class="lab-preview-image" />
+          <div class="stripe-buy-button-wrap home-stripe-buy">
+            <stripe-buy-button
+              buy-button-id="buy_btn_1TU5ua12GruX4WYOzJW1IIFV"
+              publishable-key="pk_live_51TTx5512GruX4WYODgJnupqMFYP2rG0oOuAG99TXr223Rrz3oBOlJCoSnYpiuiL1v2rWmXwPYOJsTduHlroLhDHu00iEXpSY4Q">
+            </stripe-buy-button>
+          </div>
+        </div>
+      </section>
     </section>
   `;
 

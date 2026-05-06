@@ -1009,3 +1009,83 @@ h3,
 .stripe-buy-button-wrap stripe-buy-button {
   width: 100%;
 }
+
+
+.home-lab-promo {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  gap: 18px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(112, 255, 214, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(112, 255, 214, 0.10), transparent 38%),
+    linear-gradient(135deg, rgba(20, 28, 46, 0.78), rgba(9, 17, 30, 0.78));
+}
+
+.home-lab-promo h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.home-lab-promo-copy {
+  display: grid;
+  gap: 12px;
+}
+
+.home-lab-promo-copy p {
+  margin: 0;
+}
+
+.lab-eyebrow {
+  color: var(--success);
+}
+
+.home-lab-promo-visual {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.lab-preview-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: var(--shadow);
+}
+
+.promo-button-row {
+  margin-top: 4px;
+}
+
+.promo-open-link {
+  text-decoration: none;
+}
+
+.home-stripe-buy {
+  width: 100%;
+}
+
+.home-stripe-buy stripe-buy-button {
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .home-lab-promo {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-preview-image {
+    max-height: none;
+    object-fit: contain;
+  }
+}

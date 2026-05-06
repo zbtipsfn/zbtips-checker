@@ -76,3 +76,9 @@ The old placeholder JavaScript payment link logic was removed.
 
 The Stripe script and CSS were present, but the actual promo section was missing from index.html.
 This version inserts the Controller Lab promo section between the hero header and the checker app section.
+
+
+## Home promo reposition update
+- Moved Controller Lab promo to the bottom of the home screen so users see the symptom checker first
+- Added a Controller Lab preview screenshot inside the promo section
+- Kept the Stripe buy button inside the lower promo section
